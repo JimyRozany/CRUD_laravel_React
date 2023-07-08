@@ -1,6 +1,7 @@
 import { Navigate, createBrowserRouter } from "react-router-dom";
 import { Login, NotFound, Signup, Dashboard, Users } from "./views/index";
 import { DefaultLayout, GuestLayout } from "./components/index";
+import UserForm from "./views/UserForm";
 
 const router = createBrowserRouter([
     {
@@ -18,6 +19,14 @@ const router = createBrowserRouter([
             {
                 path: "/users",
                 element: <Users />,
+            },
+            {
+                path: "/users/new",
+                element: <UserForm key="userCreate" />,
+            },
+            {
+                path: "/users/:id",
+                element: <UserForm key="userUpdate" />,
             },
         ],
     },

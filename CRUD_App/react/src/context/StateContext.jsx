@@ -3,17 +3,24 @@ import { createContext, useContext, useState } from "react";
 const StateContext = createContext({
     user: null, // user info
     token: null, //user token
+    notification:null,
     setUser: () => {},
     setToken: () => {},
+    setNotification:() => {}
 });
 
 export const ContextProvidor = ({ children }) => {
-    const [user, setUser] = useState({
-        name: "mohamed",
-    });
-    // const [token, _setToken] = useState(1234);
+    const [user, setUser] = useState({});
+    const [notification, _setNotification] = useState('');
     const [token, _setToken] = useState(localStorage.getItem("ACCESS_TOKEN"));
 
+    const setNotification = (message) => {
+        _setNotification(message);
+
+        setTimeout(() => {
+            setNotification('')
+        }, 5000);
+    }
     const setToken = (token) => {
         _setToken(token);
         if (token) {
@@ -29,6 +36,8 @@ export const ContextProvidor = ({ children }) => {
                 token,
                 setUser,
                 setToken,
+                notification,
+                setNotification
             }}
         >
             {children}
