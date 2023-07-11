@@ -1,4 +1,4 @@
-import { useRef  ,useState} from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useStateContext } from "../context/stateContext";
 import axiosClient from "../axios-client";
@@ -8,7 +8,7 @@ const Signup = () => {
     const emailRef = useRef();
     const passwordRef = useRef();
     const passwordConfirmationRef = useRef();
-    const [errors ,setErrors] = useState(null)
+    const [errors, setErrors] = useState(null);
 
     const { setUser, setToken } = useStateContext();
     const onSubmit = (e) => {
@@ -21,11 +21,10 @@ const Signup = () => {
             password: passwordRef.current.value,
             password_confirmation: passwordConfirmationRef.current.value,
         };
-
+        // debugger;
         axiosClient
             .post("/signup", payload)
             .then(({ data }) => {
-                
                 setUser(data.user);
                 setToken(data.token);
             })
@@ -33,7 +32,7 @@ const Signup = () => {
                 const response = err.response;
                 if (response && response.status === 422) {
                     // console.log(response.data.errors);
-                    setErrors(response.data.errors)
+                    setErrors(response.data.errors);
                 }
             });
     };
@@ -41,16 +40,13 @@ const Signup = () => {
         <form onSubmit={onSubmit} className="flex flex-col gap-3">
             <h3 className="text-center text-3xl text-purple-600">Register</h3>
 
-
-            {
-                errors && <div className="bg-pink-500 text-white p-4 rounded-lg bg-opacity-70">
-                    {
-                        Object.keys(errors).map(key => (
-                            <p key={key}>{errors[key][0]}</p>
-                        ))
-                    }
+            {errors && (
+                <div className="bg-pink-500 text-white p-4 rounded-lg bg-opacity-70">
+                    {Object.keys(errors).map((key) => (
+                        <p key={key}>{errors[key][0]}</p>
+                    ))}
                 </div>
-            }
+            )}
 
             <input
                 ref={nameRef}
@@ -65,7 +61,6 @@ const Signup = () => {
                 placeholder="Email"
             />
             <input
-               
                 ref={passwordRef}
                 type="password"
                 className="border rounded-md focus:outline-purple-700 pl-3 text-pink-500 "
